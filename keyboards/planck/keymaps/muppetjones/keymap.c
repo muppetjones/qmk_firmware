@@ -44,6 +44,8 @@ enum planck_keycodes {
 #define RAISE MO(_RAISE)
 #define NUMPD TT(_NUMPD)
 
+#define HY_ESC HYPR_T(KC_ESC)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Qwerty
@@ -95,8 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_CLMK_DH] = LAYOUT_planck_grid(
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
+    HY_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
     KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
@@ -216,7 +218,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
 #endif
 
+/* Setup layer lighting
+ *
+ */
+
+// Define light layers
+// -- e.g., light up LEDS 3-6 with RED when the numpd layer is active
+const rgblight_segment_t PROGMEM rgb_clmk_dh[] = RGBLIGHT_LAYER_SEGMENTS( {0, 9, HSV_PURPLE} );
+const rgblight_segment_t PROGMEM rgb_lower[] = RGBLIGHT_LAYER_SEGMENTS( {0, 9, HSV_GOLDENROD} );
+const rgblight_segment_t PROGMEM rgb_raise[] = RGBLIGHT_LAYER_SEGMENTS( {0, 9, HSV_BLUE} );
+const rgblight_segment_t PROGMEM rgb_adjust[] = RGBLIGHT_LAYER_SEGMENTS( {0, 9, HSV_GREEN} );
+const rgblight_segment_t PROGMEM rgb_numpd[] = RGBLIGHT_LAYER_SEGMENTS( {1, 4, HSV_RED} );
+const rgblight_segment_t PROGMEM rgb_blank[] = RGBLIGHT_LAYER_SEGMENTS( {0, 9, HSV_WHITE} );
+
+const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    rgb_clmk_dh,
+    rgb_numpd,
+    rgb_lower,
+    rgb_raise,
+    rgb_adjust,
+    rgb_blank
+);
+
+void keyboard_post_init_user(void) {
+    rgblight_layers = rgb_layers;  // Enable the LED layers
+}
+
 layer_state_t layer_state_set_user(layer_state_t state) {
+  rgblight_set_layer_state(0, layer_state_cmp(state, _CLMK_DH));
+  rgblight_set_layer_state(1, layer_state_cmp(state, _NUMPD));
+  rgblight_set_layer_state(4, layer_state_cmp(state, _ADJUST));
+  rgblight_set_layer_state(2, layer_state_cmp(state, _LOWER));
+  rgblight_set_layer_state(3, layer_state_cmp(state, _RAISE));
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
