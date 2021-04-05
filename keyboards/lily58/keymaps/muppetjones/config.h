@@ -36,6 +36,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 100
 
 #undef RGBLED_NUM
+
+// Reduce firmware size
+// 	https://thomasbaart.nl/2018/12/01/reducing-firmware-size-in-qmk/
+// also requires EXTRAFLAGS in config.h
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+
 // #define RGBLIGHT_ANIMATIONS
 // #define RGBLED_NUM 27
 // #define RGBLIGHT_LIMIT_VAL 120

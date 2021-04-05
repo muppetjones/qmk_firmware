@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------| Raise |    | Lower |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |Enter |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | Ctrl | LGUI |LOWER | /Space  /       \Space \  |RAISE | Alt  | RGUI |
+ *                   | Alt  | LGUI |LOWER | /Space  /       \Space \  |RAISE | Ctrl | RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC, \
   HY_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                     KC_M,    KC_N,    KC_E,    KC_I,   KC_O,    KC_QUOT, \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,   RAISE,   LOWER,   KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT, \
-                             KC_LCTL, KC_LGUI, LOWER,  KC_SPC,  KC_SPC,  RAISE,   KC_LALT, KC_RGUI \
+                             KC_LALT, KC_LGUI, LOWER,  KC_SPC,  KC_SPC,  RAISE,   KC_LCTL, KC_RGUI \
 ),
 
 /* QWERTY
@@ -155,6 +155,8 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 // When you add source files to SRC in rules.mk, you can use functions.
 const char *read_layer_state(void);
 const char *read_logo(void);
+const char *wpm_state(void);
+void render_bongo_cat(void);
 void set_keylog(uint16_t keycode, keyrecord_t *record);
 // const char *read_keylog(void);
 // const char *read_keylogs(void);
@@ -174,7 +176,10 @@ void oled_task_user(void) {
     //oled_write_ln(read_host_led_state(), false);
     //oled_write_ln(read_timelog(), false);
   } else {
-    oled_write(read_logo(), false);
+    render_bongo_cat();
+    oled_set_cursor(0,6);
+    oled_write(wpm_state(), false);
+    // oled_write(read_logo(), false);
   }
 }
 #endif // OLED_DRIVER_ENABLE
