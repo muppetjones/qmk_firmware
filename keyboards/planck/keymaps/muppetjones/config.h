@@ -39,3 +39,6 @@
 
 // Enable lighting layers
 #define RGBLIGHT_LAYERS
+
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT

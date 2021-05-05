@@ -96,10 +96,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_CLMK_DH] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC,
-    HY_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,   KC_O,    KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT,
-    KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+    HY_ESC,  GUI_T(KC_A), ALT_T(KC_R), CTL_T(KC_S), SFT_T(KC_T), KC_G,    KC_M,    SFT_T(KC_N), CTL_T(KC_E), ALT_T(KC_I), GUI_T(KC_O), KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
+    KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 /* Dvorak
@@ -122,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   !  |   @  |   #  |   $  |   (  |   )  |   7  |   8  |   9  |   \  | Bksp |
+ * |   ~  |   !  |   @  |   `  |   $  |   (  |   )  |   7  |   8  |   9  |   \  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |   `  |   %  |   ^  |   _  |   -  |   {  |   }  |   4  |   5  |   6  |   *  |   \  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -134,8 +134,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 21.03.28: Completely revamped to contain 10-key numpad and symbols.
  */
 [_LOWER] = LAYOUT_planck_grid(
-    KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_7, KC_8,   KC_9,   KC_BSLS, KC_BSPC,
-    KC_GRV,  KC_PERC, KC_CIRC, KC_UNDS, KC_MINS, KC_LCBR, KC_RCBR, KC_4, KC_5,   KC_6,   KC_ASTR, KC_BSLS,
+    KC_TILD, KC_EXLM, KC_AT,   KC_GRV,  KC_DLR,  KC_LPRN, KC_RPRN, KC_7, KC_8,   KC_9,   KC_BSLS, KC_BSPC,
+    KC_GRV,  KC_PERC, KC_CIRC, KC_UNDS, SFT_T(KC_MINS), KC_LCBR, KC_RCBR, KC_4, KC_5,   KC_6,   KC_ASTR, KC_BSLS,
     _______, _______, _______, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_1, KC_2,   KC_3,   KC_PIPE, KC_SFTENT,
     _______, _______, _______, _______, _______, KC_SPC,  KC_SPC,  KC_0, KC_DOT, KC_EQL, KC_AMPR, _______
  ),
@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |------+------+------+------+------+------+------+------+------+------+------+------|
 * |      | MS_L | MS_D | MS_U | MS_R |      |      | LEFT | DOWN |  UP  |RIGHT |  \   |
 * |------+------+------+------+------+------+------+------+------+------+------+------|
-* |MS_A_0|MS_A_1|MS_A_2| MS_2 | MS_1 |      |      | Home | End  |Pg Up |Pg Dn |      |
+* |      |MS_A_1|MS_A_2| MS_2 | MS_1 |      |      | Home | End  |Pg Up |Pg Dn |      |
 * |------+------+------+------+------+------+------+------+------+------+------+------|
 * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
 * `-----------------------------------------------------------------------------------'
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT_planck_grid(
     KC_GRV,  KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______, _______, _______, _______, _______,  KC_BSPC,
     _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, KC_BSLS,
-    KC_ACL0, KC_ACL1, KC_ACL2, KC_BTN2, KC_BTN1, _______, _______, KC_HOME, KC_END,  KC_PGUP, KC_PGDN,  _______,
+    _______, KC_ACL1, KC_ACL2, KC_BTN2, KC_BTN1, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______,
     _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU,  KC_MPLY
 ),
 
