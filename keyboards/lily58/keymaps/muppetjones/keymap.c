@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_CLMK_DH] = LAYOUT( \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,   KC_0,    KC_BSPC, \
   KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC, \
-  HY_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                     KC_M,    KC_N,    KC_E,    KC_I,   KC_O,    KC_QUOT, \
+  HY_ESC,  GUI_T(KC_A), ALT_T(KC_R), CTL_T(KC_S), SFT_T(KC_T),  KC_G,                     KC_M,    SFT_T(KC_N), CTL_T(KC_E), ALT_T(KC_I), GUI_T(KC_O),    KC_QUOT, \
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,   RAISE,   LOWER,   KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT, \
                              KC_LALT, KC_LGUI, LOWER,  KC_SPC,  KC_SPC,  RAISE,   KC_LCTL, KC_RGUI \
 ),
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT( \
   KC_GRV , XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, _______, \
   KC_TILD, XXXXXXX, XXXXXXX, KC_GRV,  XXXXXXX, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_BSLS, _______, \
-  _______, KC_PERC, KC_CIRC, KC_UNDS, KC_MINS, KC_LCBR,                   KC_RCBR, KC_4,    KC_5,    KC_6,    KC_ASTR, KC_GRV, \
+  _______, KC_PERC, KC_CIRC, KC_UNDS, SFT_T(KC_MINS), KC_LCBR,            KC_RCBR, KC_4,    KC_5,    KC_6,    KC_ASTR, KC_GRV, \
   _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_LBRC, _______, _______, KC_RBRC, KC_1,    KC_2,    KC_3,    KC_PIPE, _______, \
                              _______, _______, _______, _______, KC_ENT,  KC_0,    KC_DOT,  KC_EQL \
 ),
