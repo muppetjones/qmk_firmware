@@ -215,7 +215,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|  Del |
+ * |      | Reset|Debug | RGB  |RGBMOD| HUE+ | HUE- | SAT+ | SAT- |BRGTH+|BRGTH-|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |Brite |MUSmod|Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|Plover|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -225,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid(
-    _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
+    _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, _______,
     _______, BACKLIT, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK,  DVORAK,  PLOVER,  _______,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  CLMK_DH, _______,  _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
@@ -239,19 +239,41 @@ float plover_gb_song[][2] = SONG(PLOVER_GOODBYE_SOUND);
 #endif
 
 /* Setup layer lighting
+#define HSV_WHITE 0, 0, 255
+#define HSV_RED 0, 255, 255
+#define HSV_CORAL 11, 176, 255
+#define HSV_ORANGE 28, 255, 255
+#define HSV_GOLDENROD 30, 218, 218
+#define HSV_GOLD 36, 255, 255
+#define HSV_YELLOW 43, 255, 255
+#define HSV_CHARTREUSE 64, 255, 255
+#define HSV_GREEN 85, 255, 255
+#define HSV_SPRINGGREEN 106, 255, 255
+#define HSV_TURQUOISE 123, 90, 112
+#define HSV_TEAL 128, 255, 128
+#define HSV_CYAN 128, 255, 255
+#define HSV_AZURE 132, 102, 255
+#define HSV_BLUE 170, 255, 255
+#define HSV_PURPLE 191, 255, 255
+#define HSV_MAGENTA 213, 255, 255
+#define HSV_PINK 234, 128, 255
+#define HSV_BLACK 0, 0, 0
+#define HSV_OFF HSV_BLACK
  *
  */
 
+#define LIGHT_GOLDEN 30, 255, 100
+#define LIGHT_MAGENTA 213, 255, 100
+#define LIGHT_AZURE 148, 255, 100
+
 // Define light layers
 // -- e.g., light up LEDS 3-6 with RED when the numpd layer is active
-const rgblight_segment_t PROGMEM rgb_clmk_dh[] = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_PURPLE});
-const rgblight_segment_t PROGMEM rgb_lower[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_GOLDENROD});
-const rgblight_segment_t PROGMEM rgb_raise[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_BLUE});
-const rgblight_segment_t PROGMEM rgb_adjust[]  = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_GREEN});
-const rgblight_segment_t PROGMEM rgb_numpd[]   = RGBLIGHT_LAYER_SEGMENTS({1, 4, HSV_RED});
-const rgblight_segment_t PROGMEM rgb_blank[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_WHITE});
+const rgblight_segment_t PROGMEM rgb_clmk_dh[] = RGBLIGHT_LAYER_SEGMENTS({0, 9, HSV_RED});
+const rgblight_segment_t PROGMEM rgb_lower[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, LIGHT_GOLDEN});
+const rgblight_segment_t PROGMEM rgb_raise[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, LIGHT_MAGENTA});
+const rgblight_segment_t PROGMEM rgb_numpd[]   = RGBLIGHT_LAYER_SEGMENTS({0, 9, LIGHT_AZURE});
 
-const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(rgb_clmk_dh, rgb_numpd, rgb_lower, rgb_raise, rgb_adjust, rgb_blank);
+const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(rgb_clmk_dh, rgb_lower, rgb_raise, rgb_numpd);
 
 void keyboard_post_init_user(void) {
   rgblight_layers = rgb_layers;  // Enable the LED layers
@@ -260,9 +282,9 @@ void keyboard_post_init_user(void) {
 layer_state_t layer_state_set_user(layer_state_t state) {
   // rgblight_set_layer_state(0, layer_state_cmp(state, _CLMK_DH));
   // rgblight_set_layer_state(1, layer_state_cmp(state, _NUMPD));
-  rgblight_set_layer_state(4, layer_state_cmp(state, _ADJUST));
-  rgblight_set_layer_state(2, layer_state_cmp(state, _LOWER));
-  rgblight_set_layer_state(3, layer_state_cmp(state, _RAISE));
+  rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
+  rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
+  rgblight_set_layer_state(3, layer_state_cmp(state, _NUMPD));
   return update_tri_layer_state(state, _LOWER, _NUMPD, _ADJUST);
 }
 

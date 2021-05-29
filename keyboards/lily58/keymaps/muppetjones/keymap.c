@@ -8,6 +8,10 @@
 #  include "ssd1306.h"
 #endif
 
+/*
+ *  qmk compile -kb lily58/rev1 -km muppetjones
+ */
+
 extern uint8_t is_master;
 
 enum layer_number {
@@ -58,10 +62,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_CLMK_DH] = LAYOUT( \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,   KC_0,    KC_BSPC, \
-  XXXXXXX, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC, \
-  XXXXXXX, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                     KC_M,    HOME_N,  HOME_E,  HOME_I, HOME_O,  KC_QUOT, \
+  KC_TAB, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC, \
+  HY_ESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                     KC_M,    HOME_N,  HOME_E,  HOME_I, HOME_O,  KC_QUOT, \
   XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,   HY_ESC,  KC_TAB,  KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT, \
-                             XXXXXXX, HY_ESC,  LOWER,  KC_SPC,  KC_SPC,  RAISE,   KC_LCTL, KC_RGUI \
+                             XXXXXXX, HY_ESC,  LOWER,  KC_SPC,  KC_SPC,  RAISE,   HY_ESC, HY_ESC \
 ),
 
 /* QWERTY
@@ -95,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|       |    |       |------+------+------+------+------+------|
  * |      |      |      |   +  |   =  |   [  |-------|    |-------|   ]  |   1  |   2  |   3  |   |  |Enter |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   |      |      |LOWER | /Space  /       \Enter \  |   0  |   .  |   =  |
+ *                   |      |      |LOWER | /       /       \      \  |   0  |   .  |   =  |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
@@ -104,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TILD, XXXXXXX, XXXXXXX, KC_GRV,  KC_TILD, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_BSLS, _______, \
   _______, KC_LGUI, KC_LALT, KC_UNDS ,HOME_MIN,KC_LCBR,                   KC_RCBR, KC_4,    KC_5,    KC_6,    KC_ASTR, KC_GRV, \
   _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_LBRC, _______, _______, KC_RBRC, KC_1,    KC_2,    KC_3,    KC_PIPE, _______, \
-                             _______, _______, _______, _______, KC_ENT,  KC_0,    KC_DOT,  KC_EQL \
+                             _______, _______, _______, _______, _______, KC_0,    KC_DOT,  KC_EQL \
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -122,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // */
 
 [_RAISE] = LAYOUT( \
-  _______, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  _______, \
+  _______, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX, KC_CAPS,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  _______, \
   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, \
   _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, \
   _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,  KC_WH_L, KC_WH_R,  XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______, \
