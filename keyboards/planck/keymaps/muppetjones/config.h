@@ -37,6 +37,7 @@
 
 // Enable lighting layers
 #define RGBLIGHT_LAYERS
+#define RGBLIGHT_SLEEP
 
 // Change "hold" time (default is 200 ms)
 #define TAPPING_TERM 200

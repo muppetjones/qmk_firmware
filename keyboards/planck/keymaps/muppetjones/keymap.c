@@ -19,9 +19,9 @@
 
 enum planck_layers {
   _CLMK_DH,
+  _CLMK_II,
   _QWERTY,
   _COLEMAK,
-  _DVORAK,
   _LOWER,
   _RAISE,
   _PLOVER,
@@ -31,9 +31,9 @@ enum planck_layers {
 
 enum planck_keycodes {
   CLMK_DH = SAFE_RANGE,
+  CLMK_II,
   QWERTY,
   COLEMAK,
-  DVORAK,
   PLOVER,
   BACKLIT,
   EXT_PLV,
@@ -118,7 +118,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
-/* Dvorak
+
+
+/* Colemak DH inner row
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -129,11 +131,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
-[_DVORAK] = LAYOUT_planck_grid(
-    KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
-    KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+[_CLMK_II] = LAYOUT_planck_grid(
+    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_TAB,  KC_BSPC, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,
+    HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    HY_ESC,  KC_QUOT, KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,
+    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    XXXXXXX, KC_ENT,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,
+    XXXXXXX, XXXXXXX, XXXXXXX, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
 ),
 
 /* Lower
@@ -150,10 +152,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 21.03.28: Completely revamped to contain 10-key numpad and symbols.
  */
 [_LOWER] = LAYOUT_planck_grid(
-    KC_TILD, _______, _______, KC_GRV,  KC_TILD, KC_LPRN, KC_RPRN, KC_7, KC_8,   KC_9,   KC_BSLS, _______,
-    KC_GRV,  KC_LGUI, KC_LALT, KC_UNDS,HOME_MIN, KC_LCBR, KC_RCBR, KC_4, KC_5,   KC_6,   KC_ASTR, KC_BSLS,
-    _______, _______, _______, KC_PLUS, KC_EQL,  KC_LBRC, KC_RBRC, KC_1, KC_2,   KC_3,   KC_PIPE, _______,
-    _______, _______, _______, _______, _______, _______, _______, KC_0, KC_DOT, KC_EQL, KC_AMPR, _______
+    _______, _______, KC_GRV,  KC_TILD, KC_LPRN, XXXXXXX, KC_BSPC, KC_RPRN, KC_7, KC_8,   KC_9,   KC_BSLS,
+    KC_LGUI, KC_LALT, KC_UNDS,HOME_MIN, KC_LCBR, XXXXXXX, XXXXXXX, KC_RCBR, KC_4, KC_5,   KC_6,   KC_ASTR,
+    _______, _______, KC_PLUS, KC_EQL,  KC_LBRC, XXXXXXX, KC_ENT,  KC_RBRC, KC_1, KC_2,   KC_3,   KC_PIPE,
+    _______, _______, _______, _______, _______, KC_SPC,  KC_SPC,  _______, KC_0, KC_DOT, KC_EQL, KC_AMPR
  ),
 
 /* Raise
@@ -169,10 +171,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * 21.02.22: Removed F keys and replaced with useful programming keys.
 */
 [_RAISE] = LAYOUT_planck_grid(
-    KC_GRV,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   KC_BSPC,
-    _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,
-    _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU,  KC_MPLY
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+    KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______, XXXXXXX, XXXXXXX, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
+    KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, _______, XXXXXXX, XXXXXXX, _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,
+    _______, _______, _______, _______, _______, KC_SPC,  KC_SPC,  _______, _______, KC_MNXT, KC_VOLD, KC_VOLU
 ),
 
 /* Num Pad
