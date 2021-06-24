@@ -1,4 +1,4 @@
-/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
+/* Copyright 2020 Stephen J. Bush
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  */
 #include QMK_KEYBOARD_H
 #include "features/casemodes.h"
+#include "rgblight.h"
 
 enum layers { _COLEDH = 0, _LOWER, _RAISE, _NAV, _ADJUST };
 
@@ -49,11 +50,12 @@ enum custom_keycodes {
 };
 
 #ifdef RGBLIGHT_ENABLE
-typedef struct {
-    uint8_t hue;
-    uint8_t sat;
-    uint8_t val;
-} rgb_hsv_t;
+// typedef struct {
+//     uint8_t hue;
+//     uint8_t sat;
+//     uint8_t val;
+// } rgb_hsv_t;
+static rgblight_config_t home_rgb;
 
 void set_rgb_home(void);
 void set_rgb_by_layer(layer_state_t);
@@ -67,7 +69,7 @@ void set_rgb_by_layer(layer_state_t);
 
 // Define a type for as many tap dance states as you need
 typedef enum {
-    TD_NONE = SAFE_RANGE,
+    TD_NONE = 0,
     TD_UNKNOWN,
     TD_1X_TAP,
     TD_1X_HOLD,
@@ -81,9 +83,10 @@ typedef struct {
 } td_tap_t;
 
 enum {  // Our custom tap dance key; add any other tap dance keys to this enum
-    LYR,
+    TD_LAYERS = 0,
 };
-#    define TD_LYR TD(LYR)
+#    define TD_LYR TD(TD_LAYERS)
+
 // Declare the functions to be used with your tap dance key(s)
 
 // Function associated with all tap dances
@@ -118,7 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CAPSWRD, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                        KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_PIPE,
         HY_ESC,  HR_A,    HR_R,    HR_S,    HR_T,    KC_G,                                        KC_M,    HR_N,    HR_E,    HR_I,    HR_O,    KC_QUOT,
         TD_LYR,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_LSFT, KC_LEAD, KC_DEL,  KC_TAB,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-                                   KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RSE_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RSE_TAB, KC_RALT),
+                                   KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RSE_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RSE_TAB, KC_RALT
+    ),
 /*
  * Lower Layer: Numpad
  *
@@ -130,33 +134,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |        |      |      |      |      |      |      |      |  |      |      | 0 )  | 1 !  | 2 @  | 3 #  | = +  |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      | Lower|      |      |  |      | Nav  | Raise|      |      |
+ *                        |      |      | Lower|      |      |  |      | Nav  | 0    | .    |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_LOWER] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     KC_SLSH, KC_7,    KC_8,    KC_9, KC_MINS, _______,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_ASTR, KC_4,    KC_5,    KC_6, KC_COMM, KC_PLUS,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_1,    KC_2,    KC_3, KC_EQL,  _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT
+                                 _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT,  _______
     ),
 /*
  * Raise Layer: Symbols
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  !   |  @   |  {   |  }   |  |   |                              |      |  _   |  €   |      |      |  \     |
+ * |        |  !   |  @   |  {   |  }   |  |   |                              |      |  &   |  €   |      |      |  \     |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  #   |  $   |  (   |  )   |  `   |                              |   +  |  -   |  /   |  *   |  %   |  ' "   |
+ * |        |  #   |  $   |  (   |  )   |  `   |                              |   _  |  -   |  /   |  *   |  %   |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  %   |  ^   |  [   |  ]   |  ~   |      |      |  |      |      |   &  |  =   |  ,   |  .   |  / ? | - _    |
+ * |        |  %   |  ^   |  [   |  ]   |  ~   |      |      |  |      |      |   +  |  =   |  ,   |  .   |  / ? | - _    |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        |      |      | Lower|      |      |  |      | Nav  | Raise|      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_RAISE] = LAYOUT(
-      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, KC_PLUS, _______, _______, _______, KC_BSLS,
+      _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE,                                     _______, KC_AMPR, _______, _______, _______, KC_BSLS,
       _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,                                      KC_UNDS, KC_MINS, KC_SLSH, KC_ASTR, KC_PERC, KC_QUOT,
-      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_AMPR, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+      _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______, _______, _______, _______, KC_PLUS, KC_EQL,  KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 /*
@@ -238,7 +242,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef RGBLIGHT_ENABLE
     set_rgb_by_layer(state);
 #endif
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    return state;
+    // return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -253,6 +258,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 toggle_caps_word();
             }
             return false;
+        default:
+            return true;
+    }
+}
+
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    // Regular user keycode case statement
+    switch (keycode) {
 #ifdef RGBLIGHT_ENABLE
         case RGB_HUD:
         case RGB_HUI:
@@ -261,10 +274,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGB_VAD:
         case RGB_VAI:
             set_rgb_home();
-            return true;
+            break;
 #endif
         default:
-            return true;
+            break;
     }
 }
 
@@ -289,12 +302,12 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 #endif
 
 #ifdef RGBLIGHT_ENABLE
-static rgb_hsv_t home_rgb;
 
 void set_rgb_home(void) {
-    home_rgb.hue = rgblight_get_hue();
-    home_rgb.sat = rgblight_get_sat();
-    home_rgb.val = rgblight_get_val();
+    home_rgb.raw = eeconfig_read_rgblight();
+    // home_rgb.hue = rgblight_get_hue();
+    // home_rgb.sat = rgblight_get_sat();
+    // home_rgb.val = rgblight_get_val();
 }
 
 void set_rgb_by_layer(layer_state_t state) {
@@ -313,15 +326,14 @@ void set_rgb_by_layer(layer_state_t state) {
         case _NAV:
             offset = 96;
             break;
-        case _ADJUST:
-            offset = -96;
-            break;
+        // case _ADJUST:
+        //     offset = -96;
+        //     break;
         default:  //  for any other layers, or the default layer
-            break;
+            return;
     }
     rgblight_sethsv_noeeprom((home_rgb.hue + offset) % 255, home_rgb.sat, home_rgb.val);
 }
-
 #endif
 
 #ifdef TAP_DANCE_ENABLE
@@ -329,7 +341,7 @@ void set_rgb_by_layer(layer_state_t state) {
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     switch (state->count) {
         case 1:
-            if (state->pressed)
+            if (state->interrupted || !state->pressed)
                 return TD_1X_TAP;
             else
                 return TD_1X_HOLD;
@@ -354,9 +366,9 @@ void lyr_finished(qk_tap_dance_state_t *state, void *user_data) {
         // case TD_1X_TAP:
         //   tap_code(KC_QUOT);
         //   break;
-        // case TD_1X_HOLD:
-        //   layer_on(_MY_LAYER);
-        //   break;
+        case TD_1X_HOLD:
+            layer_on(_ADJUST);
+            break;
         case TD_2X_TAP:
             // Toggle lower layer
             if (layer_state_is(_LOWER))
@@ -378,12 +390,12 @@ void lyr_finished(qk_tap_dance_state_t *state, void *user_data) {
 
 void lyr_reset(qk_tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
-    // if (lyr_tap_state.state == TD_1X_HOLD) {
-    //     layer_off(_MY_LAYER);
-    // }
+    if (lyr_tap_state.state == TD_1X_HOLD) {
+        layer_off(_ADJUST);
+    }
     lyr_tap_state.state = TD_NONE;
 }
 
 // Associate our tap dance key with its functionality
-qk_tap_dance_action_t tap_dance_actions[1] = {[LYR] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lyr_finished, lyr_reset, 275)};
+qk_tap_dance_action_t tap_dance_actions[1] = {[TD_LAYERS] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, lyr_finished, lyr_reset, 275)};
 #endif
