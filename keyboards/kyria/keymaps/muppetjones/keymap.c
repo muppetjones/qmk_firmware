@@ -16,8 +16,9 @@
 #include QMK_KEYBOARD_H
 #include "features/casemodes.h"
 #include "rgblight.h"
+#include "features/encoder_mouse.h"
 
-enum layers { _COLEDH = 0, _LOWER, _RAISE, _NAV, _ADJUST };
+enum layers { _COLEDH = 0, _MOUSE, _LOWER, _RAISE, _NAV, _ADJUST };
 
 /*
  * Custom Keys
@@ -49,12 +50,11 @@ enum custom_keycodes {
     CAPSWRD = SAFE_RANGE,
 };
 
+#ifdef ENCODER_ENABLE
+void encoder_update_standard(uint8_t index, bool clockwise);
+#endif
+
 #ifdef RGBLIGHT_ENABLE
-// typedef struct {
-//     uint8_t hue;
-//     uint8_t sat;
-//     uint8_t val;
-// } rgb_hsv_t;
 static rgblight_config_t home_rgb;
 
 void set_rgb_home(void);
@@ -122,6 +122,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         HY_ESC,  HR_A,    HR_R,    HR_S,    HR_T,    KC_G,                                        KC_M,    HR_N,    HR_E,    HR_I,    HR_O,    KC_QUOT,
         TD_LYR,  KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_LSFT, KC_LEAD, KC_DEL,  KC_TAB,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
                                    KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RSE_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RSE_TAB, KC_RALT
+    ),
+    [_MOUSE] = LAYOUT(
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+                                 KC_BTN1, _______, _______, _______, _______, _______, _______, _______, _______, KC_BTN2
     ),
 /*
  * Lower Layer: Numpad
@@ -283,6 +289,15 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
+#    ifdef POINTING_DEVICE_ENABLE
+    if (IS_LAYER_ON(_MOUSE))
+        encoder_update_mouse(index, clockwise);
+    else
+#    endif
+        encoder_update_standard(index, clockwise);
+}
+
+void encoder_update_standard(uint8_t index, bool clockwise) {
     if (index == 0) {
         // Volume control
         if (clockwise) {
@@ -305,6 +320,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
 void set_rgb_home(void) {
     home_rgb.raw = eeconfig_read_rgblight();
+    // these get the current -- not eeprom
     // home_rgb.hue = rgblight_get_hue();
     // home_rgb.sat = rgblight_get_sat();
     // home_rgb.val = rgblight_get_val();
@@ -318,19 +334,22 @@ void set_rgb_by_layer(layer_state_t state) {
     uint8_t offset = 0;
     switch (get_highest_layer(state)) {
         case _RAISE:
-            offset = 32;
+            offset = 2 * RGBLIGHT_HUE_STEP;
             break;
         case _LOWER:
-            offset = -32;
+            offset = -2 * RGBLIGHT_HUE_STEP;
             break;
         case _NAV:
-            offset = 96;
+            offset = 1 * RGBLIGHT_HUE_STEP;
             break;
-        // case _ADJUST:
+        case _MOUSE:
+            offset = -6 * RGBLIGHT_HUE_STEP;
+            break;
+        // case _ADJUST:  // layer color not recommended on layer w/ rgb keys
         //     offset = -96;
         //     break;
         default:  //  for any other layers, or the default layer
-            return;
+            break;
     }
     rgblight_sethsv_noeeprom((home_rgb.hue + offset) % 255, home_rgb.sat, home_rgb.val);
 }
@@ -341,7 +360,7 @@ void set_rgb_by_layer(layer_state_t state) {
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     switch (state->count) {
         case 1:
-            if (state->interrupted || !state->pressed)
+            if (!state->pressed)
                 return TD_1X_TAP;
             else
                 return TD_1X_HOLD;
@@ -363,9 +382,12 @@ static td_tap_t lyr_tap_state = {.is_press_action = true, .state = TD_NONE};
 void lyr_finished(qk_tap_dance_state_t *state, void *user_data) {
     lyr_tap_state.state = cur_dance(state);
     switch (lyr_tap_state.state) {
-        // case TD_1X_TAP:
-        //   tap_code(KC_QUOT);
-        //   break;
+        case TD_1X_TAP:
+            if (layer_state_is(_MOUSE))
+                layer_off(_MOUSE);
+            else
+                layer_on(_MOUSE);
+            break;
         case TD_1X_HOLD:
             layer_on(_ADJUST);
             break;
