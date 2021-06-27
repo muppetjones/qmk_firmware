@@ -33,6 +33,26 @@
 #            define MOUSEKEY_INTERVAL 50
 #        endif
 
+/** Amount of time (ms) before zeroing out the count.
+ *  A higher value will result in smoother curves but may lower accuracy
+ */
+#        ifndef TAPPING_TERM_PERSISTENCE
+#            define TAPPING_TERM_PERSISTENCE 601
+#        endif
+
+/** Amount of time (ms) to register consecutive key presses
+ *  A higher value will smooth out mouse movement and increase speed for
+ *  consecutive presses.
+ */
+#        ifndef TAPPING_TERM_MOUSE_ENCODER
+#            define TAPPING_TERM_MOUSE_ENCODER 200
+#        endif
+
+/** @brief Update mouse position based on encoder movement.
+ *  @param index The encoder index. 0 controls x-axis; 1 controls y-axis.
+ *  @param clockwise Indicates direction encoder was turned.
+ *  @returns None.
+ */
 void encoder_update_mouse(uint8_t index, bool clockwise);
 
 #    endif
