@@ -82,7 +82,7 @@ static int8_t move_unit(key_tracker_t *tracker) {
     if (0 == tracker->count) return 0;
 
     const uint16_t modifier = TAPPING_TERM_MOUSE_ENCODER < tracker->elapsed ? 1 : (TAPPING_TERM_MOUSE_ENCODER - tracker->elapsed) >> 1;
-    uint16_t       speed    = MOUSEKEY_INITIAL_SPEED + MOUSEKEY_MOVE_DELTA * modifier * tracker->count;
+    uint16_t       speed    = MOUSEKEY_INITIAL_SPEED + MOUSEKEY_MOVE_DELTA * modifier * (tracker->count >> 1);
 
     /* convert speed to USB mouse speed 1 to 127 */
     speed = (uint8_t)(speed / (1000.0f / MOUSEKEY_INTERVAL));
