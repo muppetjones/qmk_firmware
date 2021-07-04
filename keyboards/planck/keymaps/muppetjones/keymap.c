@@ -163,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * 21.02.22: Removed F keys and replaced with useful programming keys.
 */
 [_RAISE] = LAYOUT_planck_grid(
-    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, _______, _______, KC_PGUP, KC_HOME, XXXXXXX, KC_END, KC_END,
+    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, _______, _______, KC_PGUP, KC_HOME, KC_WH_D, KC_WH_U, KC_END,
     KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_MINS, _______, _______, KC_PGDN, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
     XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_EQL,  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
     _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______
