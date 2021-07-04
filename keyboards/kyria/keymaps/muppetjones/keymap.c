@@ -258,18 +258,22 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     // capsword
+#ifdef CAPSWORD_ENABLE
     if (!process_case_modes(keycode, record)) {
         return false;
     }
+#endif
     // Regular user keycode case statement
     switch (keycode) {
+#ifdef CAPSWORD_ENABLE
         case CAPSWRD:
             if (record->event.pressed) {
                 toggle_caps_word();
             }
             return false;
+#endif
         default:
             return true;
     }
