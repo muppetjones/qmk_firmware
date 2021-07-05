@@ -8,6 +8,10 @@ EXTRAFLAGS += -flto
 SRC += muppetjones.c
 SRC += ./features/casemodes.c
 
+ifdef ENCODER_ENABLE
+	SRC += ./features/etchamouse.c
+endif
+
 ifdef TAP_DANCE_ENABLE
 	SRC += ./features/dancelayers.c
 endif
