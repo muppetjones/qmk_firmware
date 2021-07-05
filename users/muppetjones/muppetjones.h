@@ -14,19 +14,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Tap Mod Layers
-// Mod-tap
-// #define NAV_SPC LT(_NAV, KC_SPC)
-#define LOW_ENT LT(_LOWER, KC_ENT)
-#define LOW_SPC LT(_LOWER, KC_SPC)
-#define RSE_ENT LT(_RAISE, KC_ENT)
-#define RSE_SPC LT(_RAISE, KC_SPC)
-#define RSE_TAB LT(_RAISE, KC_TAB)
+#pragma once
+#include QMK_KEYBOARD_H
+
+#include "tapmods.h"
+#include "wrappers.h"
+
+#ifdef CAPSWORD_ENABLE
+#    include "features/casemodes.h"
+#endif
+
+#ifdef TAP_DANCE_ENABLE
+#    include "features/dancelayers.h"
+#    define TD_LAYR TD(TD_LAYERS)
+#else
+#    define TD_LAYR XXXXXXX
+#endif
+
+/* Define layer names */
+enum userspace_layers {
+    _CLMK_DH = 0,
+    _QWERTY,
+    _MOUSE,  // Intended for encoders. Mostly pass through.
+    _LOWER,
+    _RAISE,
+    _NAV,
+    _ADJUST,
+};
 
 // for casemodes
 enum custom_keycodes {
+    CLMK_DH = SAFE_RANGE,
+    QWERTY,
 #ifdef CAPSWORD_ENABLE
-    CAPSWRD = SAFE_RANGE,
+    CAPSWRD,
 #else
     CAPSWRD = KC_CAPS,
 #endif

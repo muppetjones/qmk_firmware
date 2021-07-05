@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "muppetjones.h"
 #include "features/casemodes.h"
+#include "tapmods.h"
 
 /* Placeholder function
  * If defined in a keymap.c, this will be ignored.
@@ -33,6 +34,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     // Regular user keycode case statement
     switch (keycode) {
+        case CLMK_DH:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_CLMK_DH);
+            }
+            return false;
+            break;
+        case QWERTY:
+            if (record->event.pressed) {
+                // print("mode just switched to qwerty and this is a huge string\n");
+                set_single_persistent_default_layer(_QWERTY);
+            }
+            return false;
+            break;
 #ifdef CAPSWORD_ENABLE
         case CAPSWRD:
             if (record->event.pressed) {

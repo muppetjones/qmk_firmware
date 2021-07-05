@@ -14,3 +14,10 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+# FEATURES
+
+- [Etch-a-sketch Encoders](readme/etchasketchencoders.md)
+- [RGB Layers](readme/rgblayers.md)
+- [Tap Dance Layers](readme/dancelayers.md)
+- [Tap Mods](readme/tapmods.md)

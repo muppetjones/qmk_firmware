@@ -21,53 +21,33 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "muppetjones.h"
+#include "tapmods.h"
 
-enum planck_layers {
-    _CLMK_II,
-    _CLMK_DH,
-    _QWERTY,
+#define LAYOUT_planck_wrapper(...) LAYOUT_planck_grid(__VA_ARGS__)
+
+/* Extend layers from muppetjones.h
+    _CLMK_DH = 0,
+    _MOUSE,
     _LOWER,
     _RAISE,
-    _PLOVER,
-    _NUMPD,
+    _NAV,
     _ADJUST,
+ */
+enum planck_layers {
+    _PLOVER = _ADJUST + 1,
 };
 
 enum planck_keycodes {
-    CLMK_II = SAFE_RANGE,
-    CLMK_DH,
-    QWERTY,
-    PLOVER,
+    PLOVER = SAFE_RANGE,
     BACKLIT,
     EXT_PLV,
 };
 
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-#define NUMPD MO(_NUMPD)
-
-#define HY_ESC HYPR_T(KC_ESC)
-
-// Left-hand home row mods (colemak)
-#define HOME_A LGUI_T(KC_A)
-#define HOME_R LALT_T(KC_R)
-#define HOME_S LCTL_T(KC_S)
-#define HOME_T LSFT_T(KC_T)
-
-// Right-hand home row mods (colemak)
-#define HOME_N RSFT_T(KC_N)
-#define HOME_E RCTL_T(KC_E)
-#define HOME_I LALT_T(KC_I)
-#define HOME_O RGUI_T(KC_O)
+#define TM_VSFT LSFT_T(KC_V)
 
 // GACS (Lower)
 #define HR_LBRC LCTL_T(KC_LBRC)
 #define HR_RBRC LSFT_T(KC_RBRC)
-
-#define HR_4 RSFT_T(KC_4)
-#define HR_5 RCTL_T(KC_5)
-#define HR_6 LALT_T(KC_6)
-#define HR_ASTR RGUI_T(KC_ASTR)
 
 // Left-hand home row mods (lower)---
 // #define HOME_UND LCTL_T(KC_UNDS)  // NOTE: Mod-tap restricted to basic keycodes
@@ -75,6 +55,24 @@ enum planck_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off
+
+/* Colemak DH II
+ * ,-----------------------------------------------------------------------------------.
+ * |   Q  |   W  |   F  |   P  |   B  |  Del | Bksp |   J  |   L  |   U  |   Y  |   ;  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |   A  |   R  |   S  |   T  |   G  |      |  "   |   M  |   N  |   E  |   I  |   O  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |   Z  |   X  |   C  |   D  | V SFT| Enter| Tab  |   K  |   H  |   ,  |   .  |   /  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Brite| Ctrl | Alt  |HY_ESC|Lower |    Space    |Raise |HY_ESC| Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_CLMK_DH] = LAYOUT_planck_wrapper(
+    __COLEMAK_MOD_DH_L1________________________, KC_DEL,  KC_BSPC, __COLEMAK_MOD_DH_R1________________________,
+    __COLEMAK_MOD_DH_L2_W_GACS_________________, CAPSWRD, KC_QUOT, __COLEMAK_MOD_DH_R2_W_SCAG_________________,
+    __COLEMAK_MOD_DH_L3________________________, KC_ENT,  KC_TAB,  __COLEMAK_MOD_DH_R3________________________,
+    TD_LAYR,  XXXXXXX, XXXXXXX, HY_ESC, LOW_ENT, KC_BSPC, KC_BSPC, RAI_SPC, HY_ESC,  KC_BSPC, XXXXXXX, XXXXXXX
+),
 
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
@@ -87,49 +85,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
-[_QWERTY] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT ,
-    BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+[_QWERTY] = LAYOUT_planck_wrapper(
+    __QWERTY_L1________________________________, _______, _______, __QWERTY_R1________________________________,
+    __QWERTY_L2________________________________, _______, _______, __QWERTY_R2________________________________,
+    __QWERTY_L3________________________________, _______, _______, __QWERTY_R3________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________
 ),
 
-/* Colemak DH
- * ,-----------------------------------------------------------------------------------.
- * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  "   |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
+/* MOUSE
+ * No encoders. Just an empty layer.
  */
-[_CLMK_DH] = LAYOUT_planck_grid(
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    HY_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I, HOME_O, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
+[_MOUSE] = LAYOUT_planck_wrapper(
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________
 ),
 
-/* Colemak DH II
- * ,-----------------------------------------------------------------------------------.
- * |   Q  |   W  |   F  |   P  |   B  |  Del | Bksp |   J  |   L  |   U  |   Y  |   ;  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |   A  |   R  |   S  |   T  |   G  |      |  "   |   M  |   N  |   E  |   I  |   O  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |   Z  |   X  |   C  |   D  |   V  | Enter| Tab  |   K  |   H  |   ,  |   .  |   /  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  |HY_ESC|Lower |    Space    |Raise |HY_ESC| Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_CLMK_II] = LAYOUT_planck_grid(
-    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_DEL,  KC_BSPC, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,
-    HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    CAPSWRD, KC_QUOT, KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,
-    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_ENT,  KC_TAB,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,
-    XXXXXXX, XXXXXXX, XXXXXXX, HY_ESC,  LOW_ENT, KC_SPC,  KC_SPC,  RSE_SPC, HY_ESC,  KC_BSPC, XXXXXXX, XXXXXXX
-),
-
+// /* Colemak DH
+//  * ,-----------------------------------------------------------------------------------.
+//  * | Tab  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
+//  * |------+------+------+------+------+------+------+------+------+------+------+------|
+//  * | Esc  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  "   |
+//  * |------+------+------+------+------+------+------+------+------+------+------+------|
+//  * | Shift|   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |Enter |
+//  * |------+------+------+------+------+------+------+------+------+------+------+------|
+//  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+//  * `-----------------------------------------------------------------------------------'
+//  */
+// [_CLMK_DH] = LAYOUT_planck_grid(
+//     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
+//     HY_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,    KC_M,    HOME_N,  HOME_E,  HOME_I, HOME_O, KC_QUOT,
+//     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
+//     KC_LCTL, NUMPD,   KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_ENT,  XXXXXXX, XXXXXXX, XXXXXXX
+// ),
 /* Lower (numpad, symbols)
  * ,-----------------------------------------------------------------------------------.
  * |      |      |   (  |   )  |  ~   |      |      |      |  7 & |  8 * |  9 ( |   \  |
@@ -143,11 +132,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 21.02.22: Removed F keys.
  * 21.03.28: Completely revamped to contain 10-key numpad and symbols.
  */
-[_LOWER] = LAYOUT_planck_grid(
-    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, KC_TILD, _______, _______, KC_BSPC, KC_7,    KC_8,    KC_9,    KC_BSLS,
-    KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_GRV,  _______, _______, KC_MINS, HR_4,    HR_5,    HR_6,    HR_ASTR,
-    XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, XXXXXXX, _______, _______, KC_EQL,  KC_1,    KC_2,    KC_3,    KC_PIPE,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT,  _______, _______
+[_LOWER] = LAYOUT_planck_wrapper(
+    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, KC_TILD, _______, _______, __NUMPAD_R1________________________________,
+    KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_GRV,  _______, _______, __NUMPAD_R2________________________________,
+    XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_LSFT, _______, _______, __NUMPAD_R3________________________________,
+    _______, _______, _______, _______, _______, _______, _______, __NUMPAD_R4________________________________
 ),
 
 /* Raise
@@ -162,30 +151,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * `-----------------------------------------------------------------------------------'
 * 21.02.22: Removed F keys and replaced with useful programming keys.
 */
-[_RAISE] = LAYOUT_planck_grid(
-    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, _______, _______, KC_PGUP, KC_HOME, KC_WH_D, KC_WH_U, KC_END,
-    KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_MINS, _______, _______, KC_PGDN, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,
-    XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_EQL,  _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-    _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______
+[_RAISE] = LAYOUT_planck_wrapper(
+    XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, _______, _______, __NAV_R1___________________________________,
+    KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_MINS, _______, _______, __NAV_R2___________________________________,
+    XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_EQL,  _______, _______, __NAV_R3___________________________________,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 
-/* Num Pad
- * ,-----------------------------------------------------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |      |      |   7  |   8  |   9  |   \  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F5  |  F6  |  F7  |  F8  |      |      |   4  |   5  |   6  |   *  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  F9  |  F10 |  F11 |  F12 |      |      |   1  |   2  |   3  |   ^  |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |   0  |   .  |Enter |      |
- * `-----------------------------------------------------------------------------------'
- * 21.02.22: Added F keys
+/* Nav
+ * Available in raise.
  */
-[_NUMPD] = LAYOUT_planck_grid(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, KC_7,    KC_8, KC_9,   KC_BSLS, KC_BSPC,
-    _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, KC_4,    KC_5, KC_6,   KC_ASTR, _______,
-    _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, KC_1,    KC_2, KC_3,   KC_CIRC, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_0, KC_DOT, KC_ENT,  _______
+[_NAV] = LAYOUT_planck_wrapper(
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________,
+    __BLANK____________________________________, _______, _______, __BLANK____________________________________
 ),
 
 /* Plover layer (http://opensteno.org)
@@ -199,6 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Exit |      |      |   A  |   O  |             |   E  |   U  |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
+
 [_PLOVER] = LAYOUT_planck_grid(
     KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   ,
     XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
@@ -218,11 +199,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_ADJUST] = LAYOUT_planck_grid(
-    _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, _______,
-    _______, BACKLIT, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  CLMK_DH,  CLMK_II,  PLOVER, _______,
-    _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+[_ADJUST] = LAYOUT_planck_wrapper(
+    __ADJUST_L1________________________________,   AU_ON,  AU_OFF, __ADJUST_R1________________________________,
+    __ADJUST_L2________________________________,  MUV_DE,  MUV_IN, XXXXXXX, CLMK_DH, QWERTY,   PLOVER, XXXXXXX,
+    __ADJUST_L3________________________________,   MI_ON,  MI_OFF, __ADJUST_R3________________________________,
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  MU_MOD,   MU_ON,  MU_OFF, __BLANK_NOOP_______________________________
 )
 
 /*
@@ -297,31 +278,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // rgblight_set_layer_state(1, layer_state_cmp(state, _NUMPD));
     rgblight_set_layer_state(1, layer_state_cmp(state, _LOWER));
     rgblight_set_layer_state(2, layer_state_cmp(state, _RAISE));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _NUMPD));
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    return state;
+    // return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
-        case QWERTY:
-            if (record->event.pressed) {
-                print("mode just switched to qwerty and this is a huge string\n");
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-            break;
-        case CLMK_II:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_CLMK_II);
-            }
-            return false;
-            break;
-        case CLMK_DH:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_CLMK_DH);
-            }
-            return false;
-            break;
         case BACKLIT:
             if (record->event.pressed) {
                 register_code(KC_RSFT);

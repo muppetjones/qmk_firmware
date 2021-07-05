@@ -1,2 +1,7 @@
 SRC += muse.c
+
 MOUSEKEY_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+
+CAPSWORD_ENABLE = yes
+TAP_LAYER_ENABLE = yes
