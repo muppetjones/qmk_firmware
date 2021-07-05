@@ -16,8 +16,8 @@
 
 #include QMK_KEYBOARD_H
 #include "muppetjones.h"
-#include "features/casemodes.h"
 #include "tapmods.h"
+#include "features/casemodes.h"
 
 /* Placeholder function
  * If defined in a keymap.c, this will be ignored.
@@ -27,11 +27,9 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *
 /* Handle keypresses
  */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef CAPSWORD_ENABLE
     if (!process_case_modes(keycode, record)) {
         return false;
     }
-#endif
     // Regular user keycode case statement
     switch (keycode) {
         case CLMK_DH:
@@ -47,13 +45,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-#ifdef CAPSWORD_ENABLE
         case CAPSWRD:
             if (record->event.pressed) {
                 toggle_caps_word();
             }
             return false;
-#endif
         default:
             break;
     }

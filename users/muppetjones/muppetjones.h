@@ -19,10 +19,7 @@
 
 #include "tapmods.h"
 #include "wrappers.h"
-
-#ifdef CAPSWORD_ENABLE
-#    include "features/casemodes.h"
-#endif
+#include "features/casemodes.h"
 
 #ifdef TAP_DANCE_ENABLE
 #    include "features/dancelayers.h"
@@ -46,9 +43,5 @@ enum userspace_layers {
 enum custom_keycodes {
     CLMK_DH = SAFE_RANGE,
     QWERTY,
-#ifdef CAPSWORD_ENABLE
     CAPSWRD,
-#else
-    CAPSWRD = KC_CAPS,
-#endif
 };

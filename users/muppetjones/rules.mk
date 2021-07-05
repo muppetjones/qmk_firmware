@@ -6,12 +6,8 @@
 EXTRAFLAGS += -flto
 
 SRC += muppetjones.c
+SRC += ./features/casemodes.c
 
-# Add only if certain features are enabled
-ifdef CAPSWORD_ENABLE
-	SRC += ./features/casemodes.c
-endif
-
-ifdef TAP_LAYER_ENABLE
+ifdef TAP_DANCE_ENABLE
 	SRC += ./features/dancelayers.c
 endif

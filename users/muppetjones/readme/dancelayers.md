@@ -27,7 +27,6 @@ And sets up the following tap dance:
 
    ```
    TAP_DANCE_ENABLE = yes
-   TAP_LAYER_EN`ABLE = yes
 
    SRC += ./features/dancelayers.c
    ```
@@ -44,6 +43,8 @@ And sets up the following tap dance:
    ```
 
 4. Add `TD_LYR` to your keymap.
+
+## Functions and Enumerations
 
 The following functions are available for use:
 
