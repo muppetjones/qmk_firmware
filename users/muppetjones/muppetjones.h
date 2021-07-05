@@ -21,6 +21,10 @@
 #include "wrappers.h"
 #include "features/casemodes.h"
 
+#ifdef ENCODER_ENABLE
+#    include "features/etchamouse.h"
+#endif
+
 #ifdef TAP_DANCE_ENABLE
 #    include "features/dancelayers.h"
 #    define TD_LAYR TD(TD_LAYERS)

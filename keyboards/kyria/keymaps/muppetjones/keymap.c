@@ -16,8 +16,6 @@
 #include QMK_KEYBOARD_H
 #include "muppetjones.h"
 #include "rgblight.h"
-#include "features/casemodes.h"
-#include "features/etchamouse.h"
 
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
@@ -35,7 +33,7 @@
  */
 
 #ifdef ENCODER_ENABLE
-void encoder_update_standard(uint8_t index, bool clockwise);
+bool encoder_update_standard(uint8_t index, bool clockwise);
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -69,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     CAPSWRD, __COLEMAK_MOD_DH_L1________________________,                                     __COLEMAK_MOD_DH_R1________________________, KC_BSLS,
     HY_ESC,  __COLEMAK_MOD_DH_L2_W_GACS_________________,                                     __COLEMAK_MOD_DH_R2_W_SCAG_________________, KC_QUOT,
     TD_LAYR, __COLEMAK_MOD_DH_L3________________________, KC_LSFT, KC_LEAD, KC_DEL,  KC_TAB,  __COLEMAK_MOD_DH_R3________________________, KC_SFTENT,
-                               KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RSE_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RSE_TAB, KC_RALT
+                               KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RAI_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RAI_TAB, KC_RALT
 ),
 [_QWERTY] = LAYOUT_wrapper(
     _______, __QWERTY_L1________________________________,                                     __QWERTY_R1________________________________, _______,
@@ -240,16 +238,16 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 #ifdef ENCODER_ENABLE
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
 #    ifdef POINTING_DEVICE_ENABLE
     if (IS_LAYER_ON(_MOUSE))
-        ](index, clockwise);
+        return encoder_update_mouse(index, clockwise);
     else
 #    endif
-        encoder_update_standard(index, clockwise);
+        return encoder_update_standard(index, clockwise);
 }
 
-void encoder_update_standard(uint8_t index, bool clockwise) {
+bool encoder_update_standard(uint8_t index, bool clockwise) {
     if (index == 0) {
         // Volume control
         if (clockwise) {
@@ -265,6 +263,7 @@ void encoder_update_standard(uint8_t index, bool clockwise) {
             tap_code(KC_PGUP);
         }
     }
+    return true;
 }
 #endif
 

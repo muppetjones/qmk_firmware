@@ -11,4 +11,4 @@ POINTING_DEVICE_ENABLE = yes
 # also requires in config.h
 #	NO_ACTION_MACRO
 #	NO_ACTION_FUNCTION
-EXTRAFLAGS += -flto
+# EXTRAFLAGS += -flto
