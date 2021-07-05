@@ -48,7 +48,7 @@ features instead.
 */
 
 #include QMK_KEYBOARD_H
-#include "encoder_mouse.h"
+#include "etchamouse.h"
 #include "pointing_device.h"
 
 #ifdef POINTING_DEVICE_ENABLE
@@ -117,7 +117,7 @@ static void update_tracker(key_tracker_t *tracker, bool pressed, bool clockwise)
     }
 }
 
-void encoder_update_mouse(uint8_t index, bool clockwise) {
+bool encoder_update_mouse(uint8_t index, bool clockwise) {
     report_mouse_t curr_report = pointing_device_get_report();
 
     update_tracker(&tracker_x, 0 == index, clockwise);
@@ -128,6 +128,8 @@ void encoder_update_mouse(uint8_t index, bool clockwise) {
 
     pointing_device_set_report(curr_report);
     pointing_device_send();
+
+    return true;
 }
 
 #    endif

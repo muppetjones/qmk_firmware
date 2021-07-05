@@ -1,5 +1,4 @@
 OLED_DRIVER_ENABLE = no   # Enables the use of OLED displays
-CAPSWORD_ENABLE = yes      # Enables capsword
 ENCODER_ENABLE = yes       # Enables the use of one or more encoders
 RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 LEADER_ENABLE = yes        # Enable the Leader Key feature
@@ -13,6 +12,3 @@ POINTING_DEVICE_ENABLE = yes
 #	NO_ACTION_MACRO
 #	NO_ACTION_FUNCTION
 EXTRAFLAGS += -flto
-
-SRC +=  ./features/casemodes.c
-SRC +=  ./features/encoder_mouse.c

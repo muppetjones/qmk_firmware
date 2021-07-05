@@ -53,7 +53,7 @@
  *  @param clockwise Indicates direction encoder was turned.
  *  @returns None.
  */
-void encoder_update_mouse(uint8_t index, bool clockwise);
+bool encoder_update_mouse(uint8_t index, bool clockwise);
 
 #    endif
 #endif
