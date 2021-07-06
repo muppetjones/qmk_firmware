@@ -1,5 +1,22 @@
+/* Copyright 2020 Stephen J. Bush
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include QMK_KEYBOARD_H
-#include "features/casemodes.h"
+#include "muppetjones.h"
+#define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
 #ifdef PROTOCOL_LUFA
 #  include "lufa.h"
@@ -13,45 +30,26 @@
  *  qmk compile -kb lily58/rev1 -km muppetjones
  */
 
+// GACS (Lower)
+#define HR_LBRC LCTL_T(KC_LBRC)
+#define HR_RBRC LSFT_T(KC_RBRC)
+
 extern uint8_t is_master;
 
+/*
 enum layer_number {
   _CLMK_DH = 0,
   _QWERTY,
+  _MOUSE,
   _LOWER,
   _RAISE,
+  _NAV,
   _ADJUST,
 };
-
-// for casemodes
-enum custom_keycodes {
-  CAPSWRD = SAFE_RANGE,
-  SNAKECASE,
-};
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-#define HY_ESC HYPR_T(KC_ESC)
-
-// Left-hand home row mods (colemak)
-#define HOME_A LGUI_T(KC_A)
-#define HOME_R LALT_T(KC_R)
-#define HOME_S LCTL_T(KC_S)
-#define HOME_T LSFT_T(KC_T)
-
-// Right-hand home row mods (colemak)
-#define HOME_N RSFT_T(KC_N)
-#define HOME_E RCTL_T(KC_E)
-#define HOME_I LALT_T(KC_I)
-#define HOME_O RGUI_T(KC_O)
-
-// Left-hand home row mods (lower)---
-// #define HOME_UND LCTL_T(KC_UNDS)  // NOTE: Mod-tap restricted to basic keycodes
-#define HOME_MIN LSFT_T(KC_MINS)
+*/
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // clang-format off
-
 
 /* Colemak DH
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -67,12 +65,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-[_CLMK_DH] = LAYOUT( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    CAPSWRD,                  KC_6,    KC_7,    KC_8,    KC_9,   KC_0,    KC_BSPC, \
-  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                     KC_J,    KC_L,    KC_U,    KC_Y,   KC_SCLN, KC_BSPC, \
-  HY_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                     KC_M,    HOME_N,  HOME_E,  HOME_I, HOME_O,  KC_QUOT, \
-  XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,   HY_ESC,  KC_TAB,  KC_K,    KC_H,    KC_COMM, KC_DOT, KC_SLSH, KC_SFTENT, \
-                             XXXXXXX, HY_ESC,  LOWER,  KC_SPC,  KC_SPC,  RAISE,   HY_ESC, HY_ESC \
+[_CLMK_DH] = LAYOUT_wrapper(
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    CAPSWRD,                   __BLANK____________________________________, KC_BSPC,
+    CAPSWRD, __COLEMAK_MOD_DH_L1________________________,                   __COLEMAK_MOD_DH_R1________________________, KC_BSLS,
+    HY_ESC,  __COLEMAK_MOD_DH_L2_W_GACS_________________,                   __COLEMAK_MOD_DH_R2_W_SCAG_________________, KC_QUOT,
+    TD_LAYR, __COLEMAK_MOD_DH_L3________________________, HY_ESC,  KC_TAB,  __COLEMAK_MOD_DH_R3________________________, KC_SFTENT,
+                                KC_DEL,  KC_DEL,  HY_ESC, LOW_ENT, RAI_SPC, HY_ESC,   RAI_TAB, KC_BSPC
 ),
 
 /* QWERTY
@@ -89,13 +87,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
- [_QWERTY] = LAYOUT( \
-  KC_ESC,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV, \
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS, \
-  KC_LCTRL, KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_LBRC,  KC_RBRC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT, \
-                        KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_ENT, RAISE, KC_BSPC, KC_RGUI \
+[_QWERTY] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __QWERTY_L1________________________________,                   __QWERTY_R1________________________________, _______,
+    _______, __QWERTY_L2________________________________,                   __QWERTY_R2________________________________, _______,
+    _______, __QWERTY_L3________________________________, _______, _______, __QWERTY_R3________________________________, _______,
+                               _______, _______, _______, _______, _______, _______, _______, _______
 ),
+[_MOUSE] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __BLANK____________________________________, _______, _______, __BLANK____________________________________, _______,
+                               KC_BTN1, __BLANK____________________________________, _______, KC_BTN2
+),
+
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |   `  |      | Mute | Vol- | Vol+ |      |                    |      |      |      |      |      |      |
@@ -110,12 +116,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-[_LOWER] = LAYOUT( \
-  KC_GRV , XXXXXXX, XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, _______, \
-  KC_TILD, XXXXXXX, XXXXXXX, KC_GRV,  KC_TILD, KC_LPRN,                   KC_RPRN, KC_7,    KC_8,    KC_9,    KC_BSLS, _______, \
-  _______, KC_LGUI, KC_LALT, KC_UNDS ,HOME_MIN,KC_LCBR,                   KC_RCBR, KC_4,    KC_5,    KC_6,    KC_ASTR, KC_GRV, \
-  _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_LBRC, _______, _______, KC_RBRC, KC_1,    KC_2,    KC_3,    KC_PIPE, _______, \
-                             _______, _______, _______, _______, _______, KC_0,    KC_DOT,  KC_EQL \
+[_LOWER] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __BLANK____________________________________,                   __NUMPAD_R1________________________________, _______,
+    _______, __BLANK_W_GACS_____________________________,                   __NUMPAD_R2________________________________, KC_PLUS,
+    _______, __BLANK____________________________________, _______, _______, __NUMPAD_R3________________________________, _______,
+                               __BLANK____________________________________, KC_0,    KC_DOT,  _______
 ),
 /* RAISE
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -132,13 +138,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  // */
 
-[_RAISE] = LAYOUT( \
-  _______, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX, KC_CAPS,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  _______, \
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, \
-  _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,                     XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, \
-  _______, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX,  KC_WH_L, KC_WH_R,  XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,  _______, \
-                             _______, _______, KC_BTN2,  KC_BTN1, _______,  _______, _______, _______ \
+[_RAISE] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX,                   __NAV_R1___________________________________, _______,
+    _______, KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_MINS,                   __NAV_R2___________________________________, _______,
+    _______, XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_EQL,  _______, _______, __NAV_R3___________________________________, _______,
+                               _______, _______, _______, _______, _______, _______, _______, _______
 ),
+[_NAV] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    _______, __BLANK____________________________________,                   __NAV_R1___________________________________, _______,
+    _______, __BLANK_W_GACS_____________________________,                   __NAV_R2___________________________________, _______,
+    _______, __BLANK____________________________________, _______, _______, __NAV_R3___________________________________, _______,
+                               _______, _______, _______, _______, _______, _______, _______, _______
+),
+
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      | Reset|      |      |      |      |                    | Reset|      |      |      |      |      |
@@ -153,13 +167,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
-  [_ADJUST] = LAYOUT( \
-  XXXXXXX, RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   RESET,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, _CLMK_DH,_QWERTY, XXXXXXX, XXXXXXX, XXXXXXX, \
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
-                             _______, _______, _______, _______, _______,  _______, _______, _______ \
-  )
+[_ADJUST] = LAYOUT_wrapper(
+    _______, __BLANK____________________________________,                   __BLANK____________________________________, _______,
+    RESET,   _______, _______, _______, _______, _______,                   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______,
+    _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                   _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______,
+    _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,_______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
+                               _______, _______, _______, _______, _______, _______, _______, _______
+)
 
     // clang-format on
 };
@@ -213,7 +227,7 @@ void oled_task_user(void) {
 }
 #endif  // OLED_DRIVER_ENABLE
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef OLED_DRIVER_ENABLE
     set_keylog(keycode, record);
@@ -221,20 +235,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // set_timelog();
   }
 
-  // capsword
-  if (!process_case_modes(keycode, record)) {
-    return false;
-  }
   // Regular user keycode case statement
   switch (keycode) {
-    case CAPSWRD:
-      if (record->event.pressed) {
-        toggle_caps_word();
-      }
-      return false;
     default:
       return true;
   }
 
-  // return true;
+  return true;
 }

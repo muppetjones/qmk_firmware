@@ -35,8 +35,8 @@ SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 SRC +=  ./lib/layer_state_reader.c
 SRC +=  ./lib/logo_reader.c
 SRC +=  ./lib/keylogger.c
-SRC +=  ./lib/bongo_cat.c
-SRC +=  ./features/casemodes.c
+SRC +=  ./features/bongo_cat.c
+# SRC +=  ./features/casemodes.c
         # ./lib/mode_icon_reader.c \
         # ./lib/host_led_state_reader.c \
         # ./lib/timelogger.c \

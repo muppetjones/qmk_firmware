@@ -27,6 +27,7 @@
 
 /* Extend layers from muppetjones.h
     _CLMK_DH = 0,
+    _QWERTY
     _MOUSE,
     _LOWER,
     _RAISE,
