@@ -77,14 +77,6 @@ $(eval $(call NEXT_PATH_ELEMENT))
 
 
 # Phony targets to enable a few simple make commands outside the main processing below.
-.PHONY: lily
-lily:
-	qmk compile -kb lily58/rev1 -km muppetjones
-
-.PHONY: planck
-planck:
-	qmk compile -kb planck/rev6 -km muppetjones
-
 .PHONY: list-keyboards
 list-keyboards:
 	util/list_keyboards.sh | sort -u | tr '\n' ' '
