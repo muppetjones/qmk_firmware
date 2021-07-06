@@ -201,9 +201,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_wrapper(
-    __ADJUST_L1________________________________,   AU_ON,  AU_OFF, __ADJUST_R1________________________________,
-    __ADJUST_L2________________________________,  MUV_DE,  MUV_IN, XXXXXXX, CLMK_DH, QWERTY,   PLOVER, XXXXXXX,
-    __ADJUST_L3________________________________,   MI_ON,  MI_OFF, __ADJUST_R3________________________________,
+    __ADJUST_L1________________________________,   AU_ON,  AU_OFF, XXXXXXX, PLOVER,  AG_NORM, KC_BRMU, KC__VOLUP,
+    __ADJUST_L2________________________________,  MUV_DE,  MUV_IN, XXXXXXX, CLMK_DH, AG_SWAP, KC_BRMD, KC__VOLDOWN,
+    __ADJUST_L3________________________________,   MI_ON,  MI_OFF, XXXXXXX, QWERTY,  XXXXXXX, KC_CAPS, KC__MUTE,
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  MU_MOD,   MU_ON,  MU_OFF, __BLANK_NOOP_______________________________
 )
 
