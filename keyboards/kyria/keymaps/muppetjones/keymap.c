@@ -43,6 +43,19 @@ void set_rgb_home(void);
 void set_rgb_by_layer(layer_state_t);
 #endif
 
+#ifdef COMBO_ENABLE
+enum combos {
+    K_H_TAB,
+};
+
+const uint16_t PROGMEM k_h_tab[] = {KC_K, KC_H, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+    [K_H_TAB] = COMBO(k_h_tab, KC_TAB),
+
+};
+#endif
+
 /*
  * LAYERS
  */
@@ -122,9 +135,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                              _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     // ),
     [_RAISE] = LAYOUT_wrapper(
-      _______, _______, _______, KC_GRV,  KC_GRV,  KC_BSLS,                                     _______, KC_LPRN, KC_RPRN, KC_ASTR, _______, _______,
-      _______, _______, _______, KC_UNDS, KC_MINS, KC_TILD,                                     KC_UNDS, KC_LBRC, KC_RBRC, KC_PERC, _______, _______,
-      _______, _______, _______, _______, KC_EQL,  _______, _______, _______, _______, _______, _______, KC_LCBR, KC_RCBR, _______, _______, _______,
+      _______, XXXXXXX, XXXXXXX, KC_GRV,  KC_GRV,  KC_BSLS,                                     XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, KC_ASTR, _______,
+      _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_MINS, KC_TILD,                                     KC_UNDS, KC_MINS, KC_LBRC, KC_RBRC, KC_PERC, _______,
+      _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_GRV,  _______, _______, _______, _______, KC_PLUS, KC_EQL,  KC_LCBR, KC_RCBR, XXXXXXX, _______,
                                  __BLANK____________________________________, __BLANK____________________________________
     ),
 /*
@@ -257,11 +270,19 @@ bool encoder_update_standard(uint8_t index, bool clockwise) {
         }
     } else if (index == 1) {
         // Page up/Page down
+#    ifdef MOUSEKEY_ENABLE
+        if (clockwise) {
+            tap_code(KC_WH_D);
+        } else {
+            tap_code(KC_WH_U);
+        }
+#    else
         if (clockwise) {
             tap_code(KC_PGDN);
         } else {
             tap_code(KC_PGUP);
         }
+#    endif
     }
     return true;
 }
