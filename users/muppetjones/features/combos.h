@@ -1,4 +1,4 @@
-/* Copyright 2020 Stephen J. Bush @muppetjones
+/* Copyright 2020 Stephen J. Bush
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,38 +15,3 @@
  */
 
 #pragma once
-#include QMK_KEYBOARD_H
-
-#include "tapmods.h"
-#include "wrappers.h"
-#include "features/casemodes.h"
-
-#ifdef COMBO_ENABLE
-#    include "features/combos.h"
-#endif
-
-#ifdef ENCODER_ENABLE
-#    include "features/etchamouse.h"
-#endif
-
-#ifdef TAP_DANCE_ENABLE
-#    include "features/dancelayers.h"
-#endif
-
-/* Define layer names */
-enum userspace_layers {
-    _CLMK_DH = 0,
-    _QWERTY,
-    _MOUSE,  // Intended for encoders. Mostly pass through.
-    _LOWER,
-    _RAISE,
-    _NAV,
-    _ADJUST,
-};
-
-// for casemodes
-enum custom_keycodes {
-    CLMK_DH = SAFE_RANGE,
-    QWERTY,
-    CAPSWRD,
-};
