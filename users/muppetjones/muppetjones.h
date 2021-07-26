@@ -29,6 +29,10 @@
 #    include "features/etchamouse.h"
 #endif
 
+#ifdef RGBLIGHT_ENABLE
+#    include "features/rgblayers.h"
+#endif
+
 #ifdef TAP_DANCE_ENABLE
 #    include "features/dancelayers.h"
 #endif

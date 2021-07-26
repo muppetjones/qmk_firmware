@@ -13,3 +13,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#pragma once
+#ifdef RGBLIGHT_ENABLE
+
+void set_rgb_by_layer(layer_state_t);
+void set_rgb_home(void);
+#endif

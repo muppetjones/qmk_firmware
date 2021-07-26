@@ -15,6 +15,8 @@
  */
 
 #ifdef COMBO_ENABLE
+#    include QMK_KEYBOARD_H
+
 enum combos {
     K_H_TAB,
 };

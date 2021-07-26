@@ -16,6 +16,7 @@
 #include QMK_KEYBOARD_H
 #include "muppetjones.h"
 #include "rgblight.h"
+#include <stdio.h>
 
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
@@ -34,13 +35,6 @@
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_standard(uint8_t index, bool clockwise);
-#endif
-
-#ifdef RGBLIGHT_ENABLE
-static rgblight_config_t home_rgb;
-
-void set_rgb_home(void);
-void set_rgb_by_layer(layer_state_t);
 #endif
 
 /*
@@ -207,34 +201,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     set_rgb_by_layer(state);
 #endif
     return state;
-    // return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t* record) {
     // Regular user keycode case statement
     switch (keycode) {
         default:
             return true;
     }
     return true;
-}
-
-void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Regular user keycode case statement
-    switch (keycode) {
-#ifdef RGBLIGHT_ENABLE
-        case RGB_HUD:
-        case RGB_HUI:
-        case RGB_SAD:
-        case RGB_SAI:
-        case RGB_VAD:
-        case RGB_VAI:
-            set_rgb_home();
-            break;
-#endif
-        default:
-            break;
-    }
 }
 
 #ifdef ENCODER_ENABLE
@@ -276,40 +251,28 @@ bool encoder_update_standard(uint8_t index, bool clockwise) {
 #endif
 
 #ifdef RGBLIGHT_ENABLE
-
-void set_rgb_home(void) {
-    home_rgb.raw = eeconfig_read_rgblight();
-    // these get the current -- not eeprom
-    // home_rgb.hue = rgblight_get_hue();
-    // home_rgb.sat = rgblight_get_sat();
-    // home_rgb.val = rgblight_get_val();
-}
-
-void set_rgb_by_layer(layer_state_t state) {
-    if (!rgblight_is_enabled()) {
-        return;  // lighting not enabled
-    }
-
-    uint8_t offset = 0;
+void set_layer_hsv(layer_state_t state, HSV* layer_color) {
+    int32_t h = layer_color->h, s = layer_color->s, v = layer_color->v;
     switch (get_highest_layer(state)) {
         case _RAISE:
-            offset = 2 * RGBLIGHT_HUE_STEP;
+            h += 2 * RGBLIGHT_HUE_STEP;
             break;
         case _LOWER:
-            offset = -2 * RGBLIGHT_HUE_STEP;
+            h += -2 * RGBLIGHT_HUE_STEP;
             break;
         case _NAV:
-            offset = 1 * RGBLIGHT_HUE_STEP;
+            h += 1 * RGBLIGHT_HUE_STEP;
             break;
         case _MOUSE:
-            offset = -10 * RGBLIGHT_HUE_STEP;
+            h += -7 * RGBLIGHT_HUE_STEP;
             break;
-        // case _ADJUST:  // layer color not recommended on layer w/ rgb keys
-        //     offset = -96;
-        //     break;
-        default:  //  for any other layers, or the default layer
+        default:
             break;
     }
-    rgblight_sethsv_noeeprom((home_rgb.hue + offset) % 255, home_rgb.sat, home_rgb.val);
+    layer_color->h = h % 255;
+    layer_color->s = s;
+    layer_color->v = v % 255;
+    return;
 }
+
 #endif
