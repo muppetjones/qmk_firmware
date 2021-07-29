@@ -61,7 +61,7 @@
 #define __COLEMAK_MOD_DH_L1________________________ KC_Q,    KC_W,    KC_F,     KC_P,   KC_B
 #define __COLEMAK_MOD_DH_L2_W_GACS_________________ HR_A,    HR_R,    HR_S,     HR_T,   KC_G
 #define __COLEMAK_MOD_DH_L3________________________ KC_Z,    KC_X,    KC_C,     KC_D,   KC_V
-#define __COLEMAK_MOD_DH_L3_W_SFTV_________________ KC_Z,    KC_X,    KC_C,     KC_D,   TM_V
+#define __COLEMAK_MOD_DH_L3_W_SFTV_________________ KC_Z,    KC_X,    KC_C,     KC_D,   TM_VSFT
 
 #define __COLEMAK_MOD_DH_R1________________________ KC_J,    KC_L,    KC_U,     KC_Y,   KC_SCLN
 #define __COLEMAK_MOD_DH_R2_W_SCAG_________________ KC_M,    HR_N,    HR_E,     HR_I,   HR_O
