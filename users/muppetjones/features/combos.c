@@ -20,17 +20,17 @@
 enum combos {
     K_H_TAB,
     H_COMM_TAB,
-    L_U_QUOT,
+    L_U_SCLN,
 };
 
 const uint16_t PROGMEM k_h_tab[]    = {KC_K, KC_H, COMBO_END};
 const uint16_t PROGMEM h_comm_tab[] = {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM l_u_quot[]   = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM l_u_scln[]   = {KC_L, KC_U, COMBO_END};
 
 // COMBO_COUNT defined in config.h
 combo_t key_combos[COMBO_COUNT] = {
     [K_H_TAB]    = COMBO(k_h_tab, KC_TAB),
     [H_COMM_TAB] = COMBO(h_comm_tab, KC_TAB),
-    [L_U_QUOT]   = COMBO(l_u_quot, KC_QUOT),
+    [L_U_SCLN]   = COMBO(l_u_scln, KC_SCLN),
 };
 #endif
