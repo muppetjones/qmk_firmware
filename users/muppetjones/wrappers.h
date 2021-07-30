@@ -68,6 +68,50 @@
 #define __COLEMAK_MOD_DH_R2_W_SCAG_________________ KC_M,    HR_N,    HR_E,     HR_I,   HR_O
 #define __COLEMAK_MOD_DH_R3________________________ KC_K,    KC_H,    KC_COMM,  KC_DOT, KC_SLASH
 
+/* Guitar
+ * ,----------------------------------.
+ * | Pg Up| Next | Prev | Brm+ | Vol+ |
+ * |------+------+------+------+------|
+ * | Pg Dn| Play | Stop | Brm- | Vol- |
+ * |------+------+------+------+------|
+ * | xxxx | xxxx | xxxx | xxxx | xxxx |
+ * `----------------------------------'
+ */
+//      _______, _______, _______, _______, _______, _______
+// Not sure why, but this does not work
+// #ifdef MIDI_ADVANCED
+// #define __GUITAR_1E_L______________________________ MI_E_1,  MI_F_1,  MI_Fs_1, MI_G_1,  MI_Gs_1
+// #define __GUITAR_2A_L______________________________ MI_A_1,  MI_As_1, MI_B_1,  MI_C_2,  MI_Cs_2
+// #define __GUITAR_3D_L______________________________ MI_D_2,  MI_Ds_2, MI_E_2,  MI_F_2,  MI_Fs_2
+// #define __GUITAR_4G_L______________________________ MI_G_2,  MI_Gs_2, MI_A_2,  MI_As_2, MI_B_2
+// #define __GUITAR_5B_L______________________________ MI_B_2,  MI_C_3,  MI_Cs_3, MI_D_3,  MI_Ds_3
+// #define __GUITAR_6E_L______________________________ MI_E_3,  MI_F_3,  MI_Fs_3, MI_G_3,  MI_Gs_3
+//
+// #define __GUITAR_1E_R______________________________ MI_A_1,  MI_As_1, MI_B_1,  MI_C_2,  MI_Cs_2
+// #define __GUITAR_2A_R______________________________ MI_D_2,  MI_Ds_2, MI_E_2,  MI_F_2,  MI_Fs_2
+// #define __GUITAR_3D_R______________________________ MI_G_2,  MI_Gs_2, MI_A_2,  MI_As_2, MI_B_2
+// #define __GUITAR_4G_R______________________________ MI_C_3,  MI_Cs_3, MI_D_3,  MI_Ds_3, MI_E_3
+// #define __GUITAR_5B_R______________________________ MI_E_3,  MI_F_3,  MI_Fs_3, MI_G_3,  MI_Gs_3
+// #define __GUITAR_6E_R______________________________ MI_A_3,  MI_As_3, MI_B_3,  MI_C_4,  MI_Cs_4
+// #endif
+
+
+/* MEDIA
+ * ,----------------------------------.
+ * | Pg Up| Next | Prev | Brm+ | Vol+ |
+ * |------+------+------+------+------|
+ * | Pg Dn| Play | Stop | Brm- | Vol- |
+ * |------+------+------+------+------|
+ * | xxxx | xxxx | xxxx | xxxx | xxxx |
+ * `----------------------------------'
+ */
+// What it MUV_IN and MUV_DE (5C2A and B)?
+// https://github.com/qmk/qmk_firmware/blob/7e832e46de26989b81f2fbf58a0f391b2b0c1aaf/quantum/quantum_keycodes.h#L135
+#define __MEDIA_R1_________________________________ AU_ON,   MI_ON,   MU_ON,   KC_BRMU, KC_VOLU
+#define __MEDIA_R2_________________________________ AU_OFF,  MI_OFF,  MU_OFF,  KC_BRMD, KC_VOLD
+#define __MEDIA_R3_________________________________ KC_MPLY, KC_MSTP, KC_MNXT, KC_MPRV, KC_MUTE
+
+
 /* NAV
  * ,----------------------------------.
  * | Pg Up| Home | Wh Dn| Wh Up|  End |
