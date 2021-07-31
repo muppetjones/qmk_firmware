@@ -162,9 +162,15 @@
  * | xxxx | xxxx |  {   |  }   | LSFT |
  * `----------------------------------'
  */
- #define __SYMBOLS_L1_______________________________ KC_TILD, KC_GRV,  KC_LPRN, KC_RPRN, XXXXXXX
- #define __SYMBOLS_L2_______________________________ KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_UNDS
- #define __SYMBOLS_L3_______________________________ XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_LSFT
+#define __SYMBOLS_L1_______________________________ KC_TILD, KC_GRV,  KC_LPRN, KC_RPRN, XXXXXXX
+#define __SYMBOLS_L2_______________________________ KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_UNDS
+#define __SYMBOLS_L3_______________________________ XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_LSFT
+
+/* VIM
+#define __BLANK____________________________________ _______, _______, _______, _______, _______
+ * Roll through :wq
+ */
+#define __VIM_L1___________________________________ _______, _______, KC_COLN, _______, _______
 
 // clang-format on
 // __END__
