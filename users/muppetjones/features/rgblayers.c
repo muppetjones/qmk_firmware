@@ -22,6 +22,11 @@ static rgblight_config_t home_rgb;
 
 __attribute__((weak)) void set_layer_hsv(layer_state_t state, HSV* offset) {}
 
+/* Placeholder function
+ * If defined in a keymap.c, this will be ignored.
+ */
+__attribute__((weak)) void post_process_record_keymap(uint16_t keycode, keyrecord_t* record) { return; }
+
 void post_process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Regular user keycode case statement
     switch (keycode) {

@@ -274,5 +274,4 @@ void set_layer_hsv(layer_state_t state, HSV* layer_color) {
     layer_color->v = v % 255;
     return;
 }
-
 #endif
