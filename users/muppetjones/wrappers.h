@@ -49,9 +49,10 @@
 #define __BLANK_W_SCAG_____________________________ _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI
 
 /* Adjust */
+// NOTE: The "BACKLIT" keycode is planck specific
 #define __ADJUST_L1________________________________ RESET,   DEBUG,   XXXXXXX, TERM_ON, TERM_OFF
 #define __ADJUST_L2________________________________ RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, RGB_MOD
-#define __ADJUST_L3________________________________ BACKLIT, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX
+#define __ADJUST_L3________________________________ XXXXXXX, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX
 
 #define __ADJUST_R1________________________________ XXXXXXX, AG_NORM, AG_SWAP, XXXXXXX, XXXXXXX
 #define __ADJUST_R2________________________________ XXXXXXX, CLMK_DH, QWERTY,  XXXXXXX, XXXXXXX
@@ -63,8 +64,8 @@
 #define __COLEMAK_MOD_DH_L3________________________ KC_Z,    KC_X,    KC_C,     KC_D,   KC_V
 #define __COLEMAK_MOD_DH_L3_W_SFTV_________________ KC_Z,    KC_X,    KC_C,     KC_D,   TM_VSFT
 
-#define __COLEMAK_MOD_DH_R1________________________ KC_J,    KC_L,    KC_U,     KC_Y,   KC_QUOT
-#define __COLEMAK_MOD_DH_R1_W_SCLN_________________ KC_J,    KC_L,    KC_U,     KC_Y,   KC_SCLN
+#define __COLEMAK_MOD_DH_R1_W_QUOT_________________ KC_J,    KC_L,    KC_U,     KC_Y,   KC_QUOT
+#define __COLEMAK_MOD_DH_R1________________________ KC_J,    KC_L,    KC_U,     KC_Y,   KC_SCLN
 #define __COLEMAK_MOD_DH_R2_W_SCAG_________________ KC_M,    HR_N,    HR_E,     HR_I,   HR_O
 #define __COLEMAK_MOD_DH_R3________________________ KC_K,    KC_H,    KC_COMM,  KC_DOT, KC_SLASH
 

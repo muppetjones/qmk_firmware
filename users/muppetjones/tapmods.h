@@ -25,6 +25,7 @@
 /* Misc */
 
 #define HY_ESC HYPR_T(KC_ESC)
+#define HY_BSPC HYPR_T(KC_BSPC)
 
 /* Tap Mod Layers */
 
