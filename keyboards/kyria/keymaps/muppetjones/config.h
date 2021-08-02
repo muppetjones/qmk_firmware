@@ -56,5 +56,3 @@
 
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
-
-#define COMBO_COUNT 1

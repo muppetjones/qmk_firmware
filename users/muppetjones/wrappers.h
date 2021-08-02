@@ -137,9 +137,9 @@
  * |      |  0 ) |  . > |      |      |
  * `----------------------------------'
  */
-#define __NUMPAD_R1________________________________ KC_BSPC, KC_7,    KC_8,    KC_9,    KC_BSLS
+#define __NUMPAD_R1________________________________ KC_DEL,  KC_7,    KC_8,    KC_9,    KC_BSLS
 #define __NUMPAD_R2________________________________ KC_MINS, HR_4,    HR_5,    HR_6,    KC_ASTR
-#define __NUMPAD_R3________________________________ KC_EQL,  KC_1,    KC_2,    KC_3,    KC_PIPE
+#define __NUMPAD_R3________________________________ KC_EQL,  KC_1,    KC_2,    KC_3,    KC_COMM
 #define __NUMPAD_R4________________________________ _______, KC_0,    KC_DOT,  _______, _______
 
 #define __NUMPAD_R3_ALT____________________________ KC_0,    KC_1,    KC_2,    KC_3,    KC_EQ

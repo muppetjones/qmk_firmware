@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
 [_CLMK_DH] = LAYOUT_wrapper(
-    CAPSWRD, __COLEMAK_MOD_DH_L1________________________,                                     __COLEMAK_MOD_DH_R1________________________, KC_BSLS,
+    CAPSWRD, __COLEMAK_MOD_DH_L1________________________,                                     __COLEMAK_MOD_DH_R1_W_QUOT_________________, KC_BSLS,
     HY_ESC,  __COLEMAK_MOD_DH_L2_W_GACS_________________,                                     __COLEMAK_MOD_DH_R2_W_SCAG_________________, KC_QUOT,
     TD_LAYR, __COLEMAK_MOD_DH_L3________________________, KC_LSFT, KC_LEAD, KC_DEL,  KC_TAB,  __COLEMAK_MOD_DH_R3________________________, KC_SFTENT,
                                KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RAI_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RAI_TAB, KC_RALT
@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, __SYMBOLS_L1_______________________________,                                     __NUMPAD_R1________________________________, _______,
       _______, __SYMBOLS_L2_______________________________,                                     __NUMPAD_R2________________________________, KC_PLUS,
       _______, __SYMBOLS_L3_______________________________, _______, _______, _______, _______, __NUMPAD_R3________________________________, _______,
-                                 __BLANK____________________________________, _______, _______, KC_0,    KC_DOT,  _______
+                                 __BLANK____________________________________, _______, KC_SPC,  KC_0,    KC_DOT,  _______
     ),
 /*
  * Raise Layer: Symbols
@@ -156,9 +156,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                        `----------------------------------'  `----------------------------------'
      */
     [_ADJUST] = LAYOUT_wrapper(
-        RESET,   _______, _______, _______, _______, _______,                                     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______,
-        _______, RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI, RGB_MOD,                                     _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______,
-        _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD,_______, _______, _______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
+        RESET,   __ADJUST_L1________________________________,                                     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______,
+        _______, __ADJUST_L2________________________________,                                     _______, KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______,
+        _______, __ADJUST_L3________________________________, _______, _______, _______, _______, _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     )
     // /*
