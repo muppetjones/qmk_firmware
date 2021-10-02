@@ -103,6 +103,16 @@
 #define __FUNC_X2_________________________ KC_F5,   KC_F6,   KC_F7,   KC_F8
 #define __FUNC_X3_________________________ KC_F9,   KC_F10,  KC_F11,  KC_F12
 
+/* Game
+ */
+#define __GAME_L1__________________________________ KC_BTN3, KC_BTN2, KC_UP,   KC_BTN1, KC_BTN5
+#define __GAME_L2__________________________________ KC_BTN4, KC_LEFT, KC_DOWN, KC_RIGHT,XXXXXXX
+#define __GAME_L3__________________________________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+
+#define __GAME_R1__________________________________ KC_Q, KC_1, KC_2, KC_3, XXXXXXX
+#define __GAME_R2__________________________________ XXXXXXX, KC_4, KC_5, KC_6, XXXXXXX
+#define __GAME_R3__________________________________ XXXXXXX, KC_7, KC_8, KC_9, XXXXXXX
+
 
 /* Guitar
  * ,----------------------------------. ,----------------------------------.
@@ -170,7 +180,7 @@
  * |      |  0 ) |  . > |      |      | * |      |      | º  ‚ |      |      |
  * `----------------------------------' * `----------------------------------'
  */
-#define __NUMPAD_R1________________________________ KC_DEL,  KC_7,    KC_8,    KC_9,    KC_BSLS
+#define __NUMPAD_R1________________________________ KC_GRV,  KC_7,    KC_8,    KC_9,    KC_BSLS
 #define __NUMPAD_R2________________________________ KC_MINS, HR_4,    HR_5,    HR_6,    KC_ASTR
 #define __NUMPAD_R3________________________________ KC_EQL,  KC_1,    KC_2,    KC_3,    KC_COMM
 #define __NUMPAD_R4________________________________ _______, KC_0,    KC_DOT,  _______, _______

@@ -18,6 +18,7 @@
 #include "muppetjones.h"
 #include "tapmods.h"
 #include "features/casemodes.h"
+#include "features/keycodes.h"
 
 /* Placeholder function
  * If defined in a keymap.c, this will be ignored.
