@@ -217,6 +217,10 @@
 #define __SYMBOLS_L2_______________________________ KC_LGUI, KC_LALT, HR_LBRC, HR_RBRC, KC_UNDS
 #define __SYMBOLS_L3_______________________________ XXXXXXX, XXXXXXX, KC_LCBR, KC_RCBR, KC_LSFT
 
+#define __SYMBOLS_R1_______________________________ KC_TILD, KC_LPRN, KC_RPRN, XXXXXXX, XXXXXXX
+#define __SYMBOLS_R2_______________________________ KC_UNDS, HR_LBRC, HR_RBRC, XXXXXXX, XXXXXXX
+#define __SYMBOLS_R3_______________________________ KC_PLUS, KC_LCBR, KC_RCBR, XXXXXXX, XXXXXXX
+
 /* VIM
  * -- Roll through ":wq" via transparency
  * ,----------------------------------.

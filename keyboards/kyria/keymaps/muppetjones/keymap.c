@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     CAPSWRD, __COLEMAK_MOD_DH_L1________________________,                                     __COLEMAK_MOD_DH_R1_W_QUOT_________________, KC_BSLS,
     HY_ESC,  __COLEMAK_MOD_DH_L2_W_GACS_________________,                                     __COLEMAK_MOD_DH_R2_W_SCAG_________________, KC_QUOT,
     TD_LAYR, __COLEMAK_MOD_DH_L3________________________, KC_LSFT, KC_LEAD, KC_DEL,  KC_TAB,  __COLEMAK_MOD_DH_R3________________________, KC_SFTENT,
-                               KC_MUTE, KC_DEL,  HY_ESC,  LOW_SPC, RAI_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RAI_TAB, KC_RALT
+                               KC_MUTE, KC_DEL,  HY_ESC,  LOW_BSP, RAI_ENT, KC_BSPC, NAV_SPC, HY_ESC,  RAI_TAB, KC_RALT
 ),
 [_QWERTY] = LAYOUT_wrapper(
     _______, __QWERTY_L1________________________________,                                     __QWERTY_R1________________________________, _______,
@@ -116,9 +116,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //                              _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     // ),
     [_RAISE] = LAYOUT_wrapper(
-      _______, XXXXXXX, XXXXXXX, KC_GRV,  KC_GRV,  KC_BSLS,                                     XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, KC_ASTR, _______,
-      _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_MINS, KC_TILD,                                     KC_UNDS, KC_MINS, KC_LBRC, KC_RBRC, KC_PERC, _______,
-      _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_GRV,  _______, _______, _______, _______, KC_PLUS, KC_EQL,  KC_LCBR, KC_RCBR, XXXXXXX, _______,
+      _______, XXXXXXX, XXXXXXX, KC_GRV,  KC_GRV,  KC_BSLS,                                     __SYMBOLS_R1_______________________________, _______,
+      _______, XXXXXXX, XXXXXXX, KC_UNDS, KC_MINS, KC_TILD,                                     __SYMBOLS_R2_______________________________, _______,
+      _______, XXXXXXX, XXXXXXX, KC_PLUS, KC_EQL,  KC_GRV,  _______, _______, _______, _______, __SYMBOLS_R3_______________________________, _______,
                                  __BLANK____________________________________, __BLANK____________________________________
     ),
 /*
@@ -255,16 +255,16 @@ void set_layer_hsv(layer_state_t state, HSV* layer_color) {
     int32_t h = layer_color->h, s = layer_color->s, v = layer_color->v;
     switch (get_highest_layer(state)) {
         case _RAISE:
-            h += 2 * RGBLIGHT_HUE_STEP;
+            h += 3 * RGBLIGHT_HUE_STEP;
             break;
         case _LOWER:
-            h += -2 * RGBLIGHT_HUE_STEP;
+            h += -3 * RGBLIGHT_HUE_STEP;
             break;
         case _NAV:
-            h += 1 * RGBLIGHT_HUE_STEP;
+            h += 2 * RGBLIGHT_HUE_STEP;
             break;
         case _MOUSE:
-            h += -7 * RGBLIGHT_HUE_STEP;
+            h += -8 * RGBLIGHT_HUE_STEP;
             break;
         default:
             break;
