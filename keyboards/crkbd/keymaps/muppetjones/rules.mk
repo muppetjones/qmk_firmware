@@ -4,3 +4,4 @@ TAP_DANCE_ENABLE = yes
 # POINTING_DEVICE_ENABLE = yes
 COMBO_ENABLE = yes
 EXTRAKEY_ENABLE = yes
+RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow

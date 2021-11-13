@@ -22,7 +22,7 @@
 
 // Change "hold" time (default is 200 ms)
 // -- used for tap dance and other tap mods
-#define TAPPING_TERM 200
+#define TAPPING_TERM 175
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 #define IGNORE_MOD_TAP_INTERRUPT
@@ -42,3 +42,4 @@
 
 // Allows media codes to properly register in macros and rotary encoder code
 #define TAP_CODE_DELAY 10
+#define COMBO_TERM 40
