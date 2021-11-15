@@ -1,9 +1,9 @@
 # Corne
 
 ```shell
-make crkbd:muppetjones:avrdude-split-left
+make crkbd:muppetqwerty:avrdude-split-left
 ```
 
 ```shell
-make crkbd:muppetjones:avrdude-split-right
+make crkbd:muppetqwerty:avrdude-split-right
 ```
